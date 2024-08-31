@@ -1,3 +1,5 @@
+"use client";
+
 import TruluGameGenerator from '../components/TruluGameGenerator'
 
 export default function Home() {
