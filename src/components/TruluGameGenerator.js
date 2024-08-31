@@ -68,7 +68,7 @@ const TruluGameGenerator = () => {
             <h2 className="text-2xl font-bold text-green-500 mb-6">Create Your Educational Game</h2>
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
-                <label htmlFor="childAge" className={labelClass}>Child's Age</label>
+                <label htmlFor="childAge" className={labelClass}>Child&apos Age</label>
                 <input
                   id="childAge"
                   type="number"
