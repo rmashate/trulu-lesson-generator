@@ -56,7 +56,7 @@ const TruluGameGenerator = () => {
               <span className="text-green-500">Generate</span> personalized <span className="text-green-500">educational games</span> in seconds
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Customized for your child's age, grade, and subject. Interactive learning made easy!
+              Customized for your child&apos age, grade, and subject. Interactive learning made easy!
             </p>
             <button className="bg-green-500 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-green-600 transition-colors">
               Create Your First Game FREE
