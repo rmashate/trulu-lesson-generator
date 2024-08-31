@@ -13,7 +13,7 @@ const TruluGameGenerator = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!childAge) newErrors.childAge = 'Please enter your childs age';
+    if (!childAge) newErrors.childAge = 'Please enter your child&apos;s age';
     if (!schoolGrade) newErrors.schoolGrade = 'Please select a school grade';
     if (!subject) newErrors.subject = 'Please select a subject';
     if (!questionCount) newErrors.questionCount = 'Please select the number of questions';
@@ -51,7 +51,7 @@ const TruluGameGenerator = () => {
         <p className="text-xl text-green-600 mb-4 text-center">Get ahead during the school year!</p>
         <form onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Child's Age</label>
+            <label className="block text-sm font-medium text-gray-700">Child&apos;s Age</label>
             <input
               type="number"
               value={childAge}
