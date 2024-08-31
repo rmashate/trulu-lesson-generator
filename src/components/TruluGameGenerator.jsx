@@ -1,7 +1,6 @@
-"use client";
-
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const TruluGameGenerator = () => {
   const [childAge, setChildAge] = useState('');
@@ -24,7 +23,7 @@ const TruluGameGenerator = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Your handleSubmit logic here
+      setGameData({ childAge, schoolGrade, subject, questionCount });
     }
   };
 
@@ -42,91 +41,135 @@ const TruluGameGenerator = () => {
   }`;
 
   return (
-    <div className="min-h-screen bg-green-50 flex flex-col items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
-        <div className="flex items-center justify-center mb-6">
-          <Image src="/trulu-logo.png" alt="Trulu Logo" width={48} height={48} className="mr-2" />
-          <h1 className="text-3xl font-bold text-green-700">Trulu</h1>
+    <div className="min-h-screen bg-green-50 flex flex-col">
+      {/* Navigation */}
+      <nav className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between h-16">
+            <div className="flex">
+              <div className="flex-shrink-0 flex items-center">
+                <Image src="/trulu-logo.png" alt="Trulu Logo" width={40} height={40} />
+                <span className="ml-2 text-2xl font-bold text-green-700">Trulu</span>
+              </div>
+            </div>
+            <div className="flex items-center">
+              <Link href="/pricing" className="text-green-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">
+                Pricing
+              </Link>
+              <Link href="/signup" className="text-green-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">
+                Sign Up
+              </Link>
+              <Link href="/login" className="text-green-600 hover:text-green-800 px-3 py-2 rounded-md text-sm font-medium">
+                Login
+              </Link>
+            </div>
+          </div>
         </div>
-        <p className="text-xl text-green-600 mb-4 text-center">Get ahead during the school year!</p>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Child's Age</label>
-            <input
-              type="number"
-              value={childAge}
-              onChange={(e) => setChildAge(e.target.value)}
-              className={inputClass('childAge')}
-            />
-            {errors.childAge && <p className="mt-1 text-sm text-red-500">{errors.childAge}</p>}
-          </div>
+      </nav>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">School Grade</label>
-            <select
-              value={schoolGrade}
-              onChange={(e) => setSchoolGrade(e.target.value)}
-              className={inputClass('schoolGrade')}
-            >
-              <option value="">Select Grade</option>
-              <option value="1">Grade 1</option>
-              <option value="2">Grade 2</option>
-              <option value="3">Grade 3</option>
-              <option value="4">Grade 4</option>
-              <option value="5">Grade 5</option>
-              <option value="6">Grade 6</option>
-            </select>
-            {errors.schoolGrade && <p className="mt-1 text-sm text-red-500">{errors.schoolGrade}</p>}
-          </div>
+      {/* Main Content */}
+      <div className="flex-grow flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-lg shadow-lg p-6">
+          <h1 className="text-3xl font-bold text-green-700 text-center mb-4">Get ahead during the school year!</h1>
+          <p className="text-gray-600 mb-6 text-center">Generate a fun, interactive game to help your child practice language and math</p>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Subject</label>
-            <select
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              className={inputClass('subject')}
-            >
-              <option value="">Select Subject</option>
-              <option value="math">Math</option>
-              <option value="science">Science</option>
-              <option value="history">History</option>
-              <option value="language">Language</option>
-            </select>
-            {errors.subject && <p className="mt-1 text-sm text-red-500">{errors.subject}</p>}
-          </div>
+          {!gameData ? (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Child&apos;s Age</label>
+                <input
+                  type="number"
+                  value={childAge}
+                  onChange={(e) => setChildAge(e.target.value)}
+                  className={inputClass('childAge')}
+                  min="5"
+                  max="18"
+                />
+                {errors.childAge && <p className="mt-1 text-sm text-red-500">{errors.childAge}</p>}
+              </div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Number of Questions</label>
-            <select
-              value={questionCount}
-              onChange={(e) => setQuestionCount(e.target.value)}
-              className={inputClass('questionCount')}
-            >
-              <option value="">Select Number of Questions</option>
-              <option value="5">5 Questions</option>
-              <option value="10">10 Questions</option>
-            </select>
-            {errors.questionCount && <p className="mt-1 text-sm text-red-500">{errors.questionCount}</p>}
-          </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700">School Grade</label>
+                <select
+                  value={schoolGrade}
+                  onChange={(e) => setSchoolGrade(e.target.value)}
+                  className={inputClass('schoolGrade')}
+                >
+                  <option value="">Select Grade</option>
+                  {[...Array(12)].map((_, i) => (
+                    <option key={i} value={i + 1}>
+                      Grade {i + 1}
+                    </option>
+                  ))}
+                </select>
+                {errors.schoolGrade && <p className="mt-1 text-sm text-red-500">{errors.schoolGrade}</p>}
+              </div>
 
-          <button
-            type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-          >
-            Generate Interactive Game
-          </button>
-        </form>
-        {gameData && (
-          <div className="mt-6">
-            {/* Render your game data here */}
-            <button
-              onClick={resetGame}
-              className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
-            >
-              Reset Game
-            </button>
-          </div>
-        )}
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Subject</label>
+                <select
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                  className={inputClass('subject')}
+                >
+                  <option value="">Select Subject</option>
+                  <option value="math">Math</option>
+                  <option value="language">Language</option>
+                  <option value="science">Science</option>
+                </select>
+                {errors.subject && <p className="mt-1 text-sm text-red-500">{errors.subject}</p>}
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700">Number of Questions</label>
+                <select
+                  value={questionCount}
+                  onChange={(e) => setQuestionCount(e.target.value)}
+                  className={inputClass('questionCount')}
+                >
+                  <option value="">Select Number of Questions</option>
+                  <option value="5">5 Questions</option>
+                  <option value="10">10 Questions</option>
+                </select>
+                {errors.questionCount && <p className="mt-1 text-sm text-red-500">{errors.questionCount}</p>}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              >
+                Generate Interactive Game
+              </button>
+            </form>
+          ) : (
+            <div>
+              <h2 className="text-2xl font-bold text-green-600 mb-4">Your Interactive {gameData.subject} Game</h2>
+              <p className="text-xl text-green-600 mb-4">
+                For a {gameData.childAge} year old in Grade {gameData.schoolGrade}
+              </p>
+              <p className="text-gray-600 mb-6">This game has {gameData.questionCount} questions.</p>
+              
+              {/* Placeholder for the actual game content */}
+              <div className="bg-green-100 p-4 rounded-lg mb-6">
+                <p className="text-lg font-semibold mb-2">Game Content Placeholder</p>
+                <p>Here, you would implement the actual game based on the selected options.</p>
+                <ul className="list-disc list-inside mt-2">
+                  <li>Subject: {gameData.subject}</li>
+                  <li>Child&apos;s Age: {gameData.childAge}</li>
+                  <li>School Grade: {gameData.schoolGrade}</li>
+                  <li>Number of Questions: {gameData.questionCount}</li>
+                </ul>
+              </div>
+
+              <button
+                onClick={resetGame}
+                className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+              >
+                Generate Another Game
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
