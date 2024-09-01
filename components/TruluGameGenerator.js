@@ -21,7 +21,7 @@ const TruluGameGenerator = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <nav className="bg-gray-800 shadow-md">
+  <nav className="bg-gray-800 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16 items-center">
             <div className="flex items-center">
@@ -41,7 +41,7 @@ const TruluGameGenerator = () => {
       </nav>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col lg:flex-row justify-between items-center">
+      <div className="flex flex-col lg:flex-row justify-between items-center">
           <div className="lg:w-1/2 mb-8 lg:mb-0">
             <h1 className="text-4xl lg:text-6xl font-bold mb-4">
               <span className="text-green-500">Generate</span> personalized <span className="text-green-500">educational games</span> in seconds
