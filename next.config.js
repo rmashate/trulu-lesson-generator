@@ -16,23 +16,12 @@ const nextConfig = {
               script-src 'self' 'unsafe-eval' 'unsafe-inline';
               style-src 'self' 'unsafe-inline';
               img-src 'self' data:;
-              font-src 'self';
+              font-src 'self' data:;
             `.replace(/\s{2,}/g, ' ').trim()
           },
         ],
       },
     ]
-  },
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-      };
-    }
-    return config;
   },
 }
 
