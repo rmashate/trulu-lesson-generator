@@ -8,32 +8,36 @@ export default async function handler(req, res) {
   const { childAge, schoolGrade, subject, questionCount } = req.body;
 
   try {
-    const systemPrompt = "You are an educational game designer. Create engaging and age-appropriate content.";
-    const humanPrompt = `Generate an educational game for a ${childAge}-year-old in grade ${schoolGrade} about ${subject} with ${questionCount} questions. Include a title, description, and multiple-choice questions with answers. Format the response as a JSON object.`;
-    
-    const fullPrompt = `${systemPrompt}\n\nHuman: ${humanPrompt}\n\nAssistant: Certainly! I'd be happy to create an educational game based on your requirements. Here's the game in JSON format:`;
+    const systemMessage = "You are an educational game designer. Create engaging and age-appropriate content.";
+    const userMessage = `Generate an educational game for a ${childAge}-year-old in grade ${schoolGrade} about ${subject} with ${questionCount} questions. Include a title, description, and multiple-choice questions with answers. Format the response as a JSON object.`;
 
     const response = await axios.post(
-      'https://api.anthropic.com/v1/complete',
+      'https://api.anthropic.com/v1/messages',
       {
-        prompt: fullPrompt,
         model: "claude-3-5-sonnet-20240620",
-        max_tokens_to_sample: 1000,
+        max_tokens: 1000,
         temperature: 0.7,
+        system: systemMessage,
+        messages: [
+          { role: "user", content: userMessage }
+        ]
       },
       {
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': process.env.ANTHROPIC_API_KEY,
+          'x-api-key': process.env.ANTHROPIC_API_KEY,
           'anthropic-version': '2023-06-01'
         },
       }
     );
 
-    // The response from Claude will be a string, so we need to extract the JSON part
-    const jsonStart = response.data.completion.indexOf('{');
-    const jsonEnd = response.data.completion.lastIndexOf('}') + 1;
-    const jsonString = response.data.completion.slice(jsonStart, jsonEnd);
+    // The response from Claude will be in the 'content' field of the last message
+    const assistantMessage = response.data.content[0].text;
+
+    // Extract the JSON object from the assistant's message
+    const jsonStart = assistantMessage.indexOf('{');
+    const jsonEnd = assistantMessage.lastIndexOf('}') + 1;
+    const jsonString = assistantMessage.slice(jsonStart, jsonEnd);
 
     const gameContent = JSON.parse(jsonString);
 
