@@ -14,7 +14,7 @@ export default async function handler(req, res) {
     const response = await axios.post(
       'https://api.anthropic.com/v1/messages',
       {
-        model: "claude-3-5-sonnet-20240620",
+        model: "claude-3-sonnet-20240320",
         max_tokens: 1000,
         temperature: 0.7,
         system: systemMessage,
@@ -31,10 +31,7 @@ export default async function handler(req, res) {
       }
     );
 
-    // The response from Claude will be in the 'content' field of the last message
     const assistantMessage = response.data.content[0].text;
-
-    // Extract the JSON object from the assistant's message
     const jsonStart = assistantMessage.indexOf('{');
     const jsonEnd = assistantMessage.lastIndexOf('}') + 1;
     const jsonString = assistantMessage.slice(jsonStart, jsonEnd);
