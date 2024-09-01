@@ -1,4 +1,5 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {};
-
-export default nextConfig;
+module.exports = {
+    env: {
+      ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
+    },
+  }
