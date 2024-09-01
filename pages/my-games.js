@@ -6,5 +6,9 @@ const DynamicMyGamesComponent = dynamic(
 )
 
 export default function MyGames() {
-  return <DynamicMyGamesComponent />
+  return (
+    <>
+      <DynamicMyGamesComponent />
+    </>
+  )
 }

@@ -11,26 +11,34 @@ export default function MyGamesComponent() {
       setLoading(true);
       try {
         const gameParams = localStorage.getItem('gameParams');
-        if (gameParams) {
-          const params = JSON.parse(gameParams);
-          const response = await fetch('/api/generate-game', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(params),
-          });
-
-          if (!response.ok) {
-            throw new Error('Failed to generate game');
-          }
-
-          const generatedGame = await response.json();
-          setGame(generatedGame);
+        if (!gameParams) {
+          console.log('No game parameters found in localStorage');
+          setError('No game parameters found. Please generate a game first.');
+          setLoading(false);
+          return;
         }
+
+        const params = JSON.parse(gameParams);
+        console.log('Parsed game parameters:', params);
+
+        const response = await fetch('/api/generate-game', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(params),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const generatedGame = await response.json();
+        console.log('Generated game:', generatedGame);
+        setGame(generatedGame);
       } catch (error) {
         console.error('Failed to generate game:', error);
-        setError('Failed to generate game. Please try again.');
+        setError(`Failed to generate game: ${error.message}`);
       } finally {
         setLoading(false);
       }
