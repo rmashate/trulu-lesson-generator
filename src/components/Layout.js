@@ -25,4 +25,8 @@ export default function Layout({ children }) {
       <main>{children}</main>
     </div>
   );
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b8c38a79e0feb486561e3e59570777c7e0e2c8c7
