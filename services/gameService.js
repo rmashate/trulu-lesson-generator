@@ -1,4 +1,9 @@
 export async function generateGame(params) {
+    if (typeof window === 'undefined') {
+      // Server-side: return a placeholder or throw an error
+      throw new Error('generateGame cannot be called server-side');
+    }
+  
     const response = await fetch('/api/generate-game', {
       method: 'POST',
       headers: {
