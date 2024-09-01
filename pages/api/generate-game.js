@@ -17,7 +17,7 @@ export default async function handler(req, res) {
       'https://api.anthropic.com/v1/complete',
       {
         prompt: fullPrompt,
-        model: "claude-2",
+        model: "claude-3-5-sonnet-20240620",
         max_tokens_to_sample: 1000,
         temperature: 0.7,
       },
