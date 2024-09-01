@@ -1,4 +1,3 @@
-// services/gameService.js
 export async function generateGame(params) {
     const response = await fetch('/api/generate-game', {
       method: 'POST',
@@ -12,12 +11,5 @@ export async function generateGame(params) {
       throw new Error('Failed to generate game');
     }
   
-    const data = await response.json();
-    
-    // Ensure the response is in the expected format
-    if (!data.title || !data.description || !Array.isArray(data.questions)) {
-      throw new Error('Invalid game data received');
-    }
-  
-    return data;
+    return response.json();
   }
