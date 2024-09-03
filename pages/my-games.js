@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { generateQuestions } from '../services/questionGenerator';
@@ -17,6 +17,19 @@ const MyGames = () => {
   const [currentDifficulty, setCurrentDifficulty] = useState('easy');
   const router = useRouter();
 
+  const generateNewQuestions = useCallback(() => {
+    if (gameParams) {
+      const questions = generateQuestions({
+        ...gameParams,
+        streak,
+        score,
+        totalQuestions,
+      });
+      setGeneratedQuestions(questions);
+      setCurrentDifficulty(questions[0].difficulty);
+    }
+  }, [gameParams, streak, score, totalQuestions]);
+
   useEffect(() => {
     const storedParams = localStorage.getItem('gameParams');
     if (storedParams) {
@@ -24,24 +37,28 @@ const MyGames = () => {
     } else {
       router.push('/');
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     if (gameParams) {
       generateNewQuestions();
     }
-  }, [gameParams]);
+  }, [gameParams, generateNewQuestions]);
 
-  const generateNewQuestions = () => {
-    const questions = generateQuestions({
-      ...gameParams,
-      streak,
-      score,
-      totalQuestions,
-    });
-    setGeneratedQuestions(questions);
-    setCurrentDifficulty(questions[0].difficulty);
-  };
+  const handleNextQuestion = useCallback((timeout = false) => {
+    if (!timeout && selectedAnswer === generatedQuestions[currentQuestion].correctAnswer) {
+      setScore((prevScore) => prevScore + 1);
+    }
+    setSelectedAnswer(null);
+    setTimeLeft(30);
+    setFeedback(null);
+    if (currentQuestion + 1 < generatedQuestions.length) {
+      setCurrentQuestion((prevQuestion) => prevQuestion + 1);
+    } else {
+      generateNewQuestions();
+      setCurrentQuestion(0);
+    }
+  }, [currentQuestion, selectedAnswer, generatedQuestions, generateNewQuestions]);
 
   useEffect(() => {
     if (!showResults && generatedQuestions.length > 0) {
@@ -58,35 +75,20 @@ const MyGames = () => {
 
       return () => clearInterval(timer);
     }
-  }, [currentQuestion, showResults, generatedQuestions]);
+  }, [currentQuestion, showResults, generatedQuestions, handleNextQuestion]);
 
   const handleAnswerSelect = (answer) => {
     setSelectedAnswer(answer);
     const isCorrect = answer === generatedQuestions[currentQuestion].correctAnswer;
     setFeedback(isCorrect ? 'Correct!' : 'Incorrect!');
     if (isCorrect) {
-      setStreak(streak + 1);
-      setScore(score + 1);
+      setStreak((prevStreak) => prevStreak + 1);
+      setScore((prevScore) => prevScore + 1);
     } else {
       setStreak(0);
     }
-    setTotalQuestions(totalQuestions + 1);
+    setTotalQuestions((prevTotal) => prevTotal + 1);
     setTimeout(() => handleNextQuestion(), 1500);
-  };
-
-  const handleNextQuestion = (timeout = false) => {
-    if (!timeout && selectedAnswer === generatedQuestions[currentQuestion].correctAnswer) {
-      setScore(score + 1);
-    }
-    setSelectedAnswer(null);
-    setTimeLeft(30);
-    setFeedback(null);
-    if (currentQuestion + 1 < generatedQuestions.length) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      generateNewQuestions();
-      setCurrentQuestion(0);
-    }
   };
 
   const restartGame = () => {
@@ -112,7 +114,7 @@ const MyGames = () => {
       {!showResults ? (
         <div>
           <div className="mb-6">
-            <p>Child's Age: {gameParams.childAge}</p>
+            <p>Child&apos;s Age: {gameParams.childAge}</p>
             <p>School Grade: {gameParams.schoolGrade}</p>
             <p>Subject: {gameParams.subject}</p>
             <p>Question {currentQuestion + 1} of {gameParams.questionCount}</p>

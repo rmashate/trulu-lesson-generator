@@ -13,7 +13,7 @@ export default function Home() {
               <span className="text-green-500">Learn</span> through <span className="text-green-500">play</span> with Trulu
             </h1>
             <p className="text-xl text-gray-400 mb-8">
-              Generate personalized educational games tailored to your child's age, grade, and interests. Make learning an adventure!
+              Generate personalized educational games tailored to your child&apos;s age, grade, and interests. Make learning an adventure!
             </p>
             <a href="#generate-game" className="bg-green-500 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-green-600 transition-colors">
               Start Learning Now
@@ -37,7 +37,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold mb-2">Personalized Learning</h3>
-              <p className="text-gray-400">Adaptive games that grow with your child's progress.</p>
+              <p className="text-gray-400">Adaptive games that grow with your child&apos;s progress.</p>
             </div>
             <div className="text-center">
               <div className="bg-green-500 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
@@ -55,7 +55,7 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold mb-2">Track Progress</h3>
-              <p className="text-gray-400">Monitor your child's learning journey with detailed insights.</p>
+              <p className="text-gray-400">Monitor your child&apos;s learning journey with detailed insights.</p>
             </div>
           </div>
         </div>
@@ -75,11 +75,11 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12">What Parents Say</h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gray-700 p-6 rounded-lg">
-              <p className="mb-4">"Trulu has made learning fun for my kids. They look forward to their daily educational games!"</p>
+              <p className="mb-4">&quot;Trulu has made learning fun for my kids. They look forward to their daily educational games!&quot;</p>
               <p className="font-semibold">- Sarah J., Parent of two</p>
             </div>
             <div className="bg-gray-700 p-6 rounded-lg">
-              <p className="mb-4">"I've seen a significant improvement in my child's math skills since we started using Trulu. Highly recommended!"</p>
+              <p className="mb-4">&quot;I&apos;ve seen a significant improvement in my child&apos;s math skills since we started using Trulu. Highly recommended!&quot;</p>
               <p className="font-semibold">- Michael T., Father</p>
             </div>
           </div>
