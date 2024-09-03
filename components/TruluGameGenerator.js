@@ -48,7 +48,8 @@ const TruluGameGenerator = () => {
               Customized for your child&apos;s age, grade, and subject. Interactive learning made easy!
             </p>
             <button className="bg-green-500 text-white px-8 py-3 rounded-md text-lg font-medium hover:bg-green-600 transition-colors">
-              Create Your First Game FREE
+              Create Your First Game FREE t!!!!!
+      
             </button>
           </div>
 
@@ -129,4 +130,11 @@ const TruluGameGenerator = () => {
   );
 };
 
-export default TruluGameGenerator;
+const config = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+
+module.exports = config;
